@@ -9,10 +9,10 @@
 $ sudo apt-get install open-jtalk open-jtalk-mecab-naist-jdic  hts-voice-nitech-jp-atr503-m001
 ```
 
-動作には[pm2](https://github.com/Unitech/pm2)を推奨しています。
+動作には[pm2](https://github.com/Unitech/pm2)とCoffeeScriptを使います。
 
 ```
-$ npm i -g pm2
+$ npm i -g pm2 coffee-script
 ```
 
 で入ります。
@@ -29,7 +29,7 @@ $ npm i -g pm2
 └── mei_sad.htsvoice
 ```
 
-のように配置しています。
+のように配置しています。違うパスを指定するばあいは`./server.coffee`を適当にいじってください。
 
 ## 起動方法
 ```
@@ -51,6 +51,51 @@ $ ./client 'テストコメント'
 ```
 
 と設定すればコメントを読んでくれるはずです。
+
+## 教育機能
+ほとんど私的ツールということもあって仕様はコロコロ変わると思います。
+
+現状ではコマンドのデリミッターに半角スペースを使用しているので、パラメーターとして与える文字列に半角スペースを含ませることはできません。
+
+
+### 覚えさせる
+
+```
+<add|teach|調教|> <regexp> <replacer>
+```
+
+よくある末尾の`wwww`などを`わら`等に置き換えたい場合は
+
+```
+add (ｗ|w)+$ わら
+```
+
+このようになります。また、
+
+```
+調教 Ubuntu うぶんつ
+```
+
+というように英語を覚えさせる場合、大文字はすべて小文字に変換されて登録されます。マッチには内部で`new RegExp(..., 'ig')`を使用しているので、`ubuntu`、`UBUNTU`も置換できます。
+
+
+### 忘れさせる
+
+```
+<remover|forget|忘却|> <regexp>
+```
+
+登録時に小文字に変換し、探索時も小文字に変換して探索するので、
+
+```
+add ubuntu うぶんつ
+```
+
+で覚えさせた場合は
+
+`remove ubuntu`、`forget Ubuntu`、`忘却 UBNUTU`のいずれを使用しても登録した単語を削除できます。
+
+
 
 ## 注意
 非同期処理内でエラーが起こるとPromiseによる **エラーの握りつぶし** が発生するので気をつけてください。

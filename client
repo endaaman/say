@@ -1,0 +1,8 @@
+#!/home/ken/.nodebrew/node/v4.2.2/bin/node
+
+// システムのインタープリターを使わない場合はシバンで絶対パスで指定する必要があります
+// また、直接CoffeeScriptのインタプリターを指定すると何故かViqoから実行できないので
+// nodeのregisterを使用しています
+
+require('coffee-script/register');
+require('./client.coffee');

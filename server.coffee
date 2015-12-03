@@ -11,9 +11,13 @@ saveSettings = ->
     fs.writeFileSync settingsFilename, JSON.stringify settings, 2, 2
 
 loadSettings = ->
-    JSON.parse fs.readFileSync settingsFilename, 'utf8'
+    try
+        JSON.parse fs.readFileSync settingsFilename, 'utf8'
+    catch
+        replaces: []
 
-
+try
+    fs.mkdirSync '/tmp/voices'
 settings = do loadSettings
 
 

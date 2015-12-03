@@ -1,0 +1,20 @@
+#!/usr/bin/env node
+
+const fs = require('fs')
+const exec = require('child-process-promise').exec
+
+base =`
+require('coffee-script/register')
+require('./client.coffee')
+`
+
+exec('which node')
+.then((result)=> {
+    code = `#!${result.stdout}${base}`
+    fs.writeFile('client', code, {mode: 0775}, (e)=> {
+        if (e) {
+            return console.log('何かがおかしい')
+        }
+        console.log('Saved the front script as "client".')
+    })
+})

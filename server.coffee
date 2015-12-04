@@ -24,11 +24,11 @@ settings = do loadSettings
 defaultVoiceType = 'normal'
 voiceTypes =
     ossan: '/usr/share/hts-voice/nitech-jp-atr503-m001/nitech_jp_atr503_m001.htsvoice'
-    normal: '~/voices/mei_normal.htsvoice'
-    happy: '~/voices/mei_happy.htsvoice'
-    sad: '~/voices/mei_sad.htsvoice'
-    bashful: '~/voices/mei_bashful.htsvoice'
-    angry: '~/voices/mei_angry.htsvoice'
+    normal: path.join __dirname, 'voices/mei_normal.htsvoice'
+    happy: path.join __dirname, 'voices/mei_happy.htsvoice'
+    sad: path.join __dirname, 'voices/mei_sad.htsvoice'
+    bashful: path.join __dirname, 'voices/mei_bashful.htsvoice'
+    angry: path.join __dirname, 'voices/mei_angry.htsvoice'
 
 
 

@@ -5,6 +5,8 @@ Router = require 'koa-router'
 
 exec = (require 'child-process-promise').exec
 
+voiceDir = '/tmp/say-server'
+
 settingsFilename = path.join __dirname, 'settings.json'
 
 saveSettings = ->
@@ -17,7 +19,7 @@ loadSettings = ->
         replaces: []
 
 try
-    fs.mkdirSync '/tmp/voices'
+    fs.mkdirSync voiceDir
 settings = do loadSettings
 
 
@@ -33,7 +35,6 @@ voiceTypes =
 
 
 cursor = 0
-voiceDir = '/tmp/say-server'
 
 current = new Promise (r)-> do r
 
@@ -101,6 +102,8 @@ say = (message)->
         exec cmd
         .then ->
             fs.unlink wavFilename
+        , (e)->
+            console.warn e
 
 
 app = koa()
@@ -111,8 +114,8 @@ router.post '/:message', (next)->
     console.log @params.message
 
     yield next
-
-    current = current.then say @params.message
+    p = say @params.message
+    current = current.then p, p
 
 app.use router.routes()
 app.listen 4001

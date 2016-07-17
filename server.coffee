@@ -84,8 +84,9 @@ say = (message)->
         cursor = cursor + 1
 
         message = parseMessage message
-
-        for i in settings.replaces
+        replaces = settings.replaces.concat([])
+        replaces.reverse()
+        for i in replaces
             reg = new RegExp i.reg, 'ig'
             message =  message.replace reg, i.replacer
 

@@ -1,11 +1,12 @@
 request = require 'request'
 
-# サーバーに合わせて設定してください
 host = 'http://localhost:4001'
 
-raw = process.argv[2]
-if not raw
+rawComment = process.argv[2]
+if not rawComment
     process.exit 0
 
-message = encodeURIComponent raw
-request.post "#{host}/#{message}"
+username = process.argv[3] or null
+
+comment = encodeURIComponent rawComment
+request.post "#{host}/#{comment}"

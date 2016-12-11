@@ -10,11 +10,11 @@ require('./client.coffee')
 
 exec('which node')
 .then((result)=> {
-    code = `#!${result.stdout}${base}`
-    fs.writeFile('client', code, {mode: 0775}, (e)=> {
-        if (e) {
-            return console.log('何かがおかしい')
-        }
-        console.log('Saved the front script as "client".')
-    })
+  const code = `#!${result.stdout}${base}`
+  fs.writeFile('client', code, {mode: 0775}, (e)=> {
+    if (e) {
+      return console.log('何かがおかしい')
+    }
+    console.log('Saved the front script as "client".')
+  })
 })

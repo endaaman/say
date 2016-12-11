@@ -1,6 +1,7 @@
 path = require 'path'
 fs = require 'fs'
 koa = require 'koa'
+bodyParser = require 'koa-bodyparser'
 Router = require 'koa-router'
 notifier = require 'node-notifier'
 
@@ -79,7 +80,7 @@ parseMessage = (message)->
       break
   message
 
-say = (rawMessage)->
+say = (rawMessage, title)->
   ->
     cursor = cursor + 1
 
@@ -101,7 +102,9 @@ say = (rawMessage)->
     ].join ''
 
     # notify
-    notifier.notify rawMessage
+    notifier.notify
+      title: title
+      message: rawMessage
 
     exec cmd
     .then ->
@@ -109,19 +112,20 @@ say = (rawMessage)->
     , (e)->
       console.warn e
 
+port = 4001
 
 app = koa()
+app.use bodyParser()
 router = new Router
-
-router.post '/:message', (next)->
+router.post '/say', (next)->
   @status = 200
-  console.log @params.message
+  { comment, username, userId } = @request.body
 
   yield next
-  p = say @params.message
+  p = say comment, username or userId or ' '
   current = current.then p, p
 
 app.use router.routes()
-app.listen 4001
+app.listen port
 
-console.info 'start listening at 4001'
+console.info "start listening at #{port}"

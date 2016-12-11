@@ -1,9 +1,0 @@
-#!/path/to/node
-
-// システムのインタープリターを使わない場合（nvmやnodebrewを使っている）は
-// シバンで絶対パスで指定する必要があります。
-// また、直接CoffeeScriptのインタプリターを指定すると何故かViqoから実行できないので
-// nodeのregisterを使用しています
-
-require('coffee-script/register');
-require('./client.coffee');

@@ -1,12 +1,13 @@
-request = require 'request'
+axios = require 'axios'
 
 host = 'http://localhost:4001'
 
-rawComment = process.argv[2]
-if not rawComment
-    process.exit 0
+comment = process.argv[2]
+if not comment
+  process.exit 0
 
-username = process.argv[3] or null
+userId = process.argv[3] or null
+username = process.argv[4] or null
 
-comment = encodeURIComponent rawComment
-request.post "#{host}/#{comment}"
+data = {comment, username, userId}
+axios.post "#{host}/say", data

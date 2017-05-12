@@ -132,3 +132,6 @@ add ubuntu うぶんつ
 
 ## 注意
 非同期処理内でエラーが起こるとPromiseによる **エラーの握りつぶし** が発生するので気をつけてください。
+
+
+/path/to/clirent "%comment%" "%userID%" "%userName%"
